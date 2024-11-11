@@ -14,46 +14,31 @@ class AudioDataset(Dataset):
         transform=None,
     ):
 
-        transcription_file = data_path / "1272-135031.trans.txt"
-
         tokenizer = Tokenizer.from_pretrained("bert-base-uncased")
         tokenizer.pre_tokenizer = pre_tokenizers.Whitespace()
 
-        collect = []
-        self.tokenized= []
-        with open(transcription_file, "r") as f:
-            for line in f.readlines():
-                file_name = line[:16]
-                transcription = line[17:].strip()
-                tokenized_transcription = tokenizer.encode(transcription)
-                self.tokenized.append(tokenized_transcription)
-                collect.append(
-                    (file_name, transcription)
-                )
-        print("Collected transcriptions")
+        df = pd.read_parquet(data_path / "transcriptions.parquet")
+        
+        self.tokenized = []
+        for transcription in df.transcription:
+            self.tokenized.append(
+                tokenizer.encode(transcription)
+            )
 
-        self.df = pd.DataFrame(
-            collect,
-            columns=["file_name", "transcription"]
-        )
-
-        collect = []
-        for file in self.df["file_name"]:
-            file = data_path / f"{file}.flac"
-            breakpoint()
-            waveform, sr = torchaudio.load(file)
+        self.waveforms = []
+        for i, file in enumerate(df["id"]):
+            file_name = f"../data/audio2text/all_audio_files/{file}.wav"
+            waveform, sr = torchaudio.load(file_name, format="wav")
             if sr != sample_rate:
                 waveform = torchaudio.transforms.Resample(orig_freq=sr, new_freq=sample_rate)(waveform)
 
             if transform:
                 waveform = transform(waveform)
 
-            collect.append(waveform)
-        print("Processed Audio Files")
+            self.waveforms.append(waveform)
 
-        # self.waveforms = torch.concat(collect, dim=?)
-
-        print(f"Audio Dataset | returned {len_self.df} datapoints")
+        print(f"Audio Dataset | returned {len(df)} datapoints")
+        breakpoint()
 
     def __len__(self):
         return len(self.df)
@@ -62,10 +47,13 @@ class AudioDataset(Dataset):
         transcription = self.tokenized[idx]
         waveform = self.waveforms[idx]
 
+        _input = torch.tensor(transcription)
+        _output = waveform1
+
         return _input, _output
 
 
 
 # main
-data_path = Path("/home/holmesa8/repos/audio_data/135031")
+data_path = Path("/research/hutchinson/workspace/holmesa8/data/audio2text")
 AudioDataset(data_path)
