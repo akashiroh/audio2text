@@ -1,0 +1,19 @@
+# config.toml
+
+project="audio2text"
+debug=1
+verbose=1
+group="MM_DD_experiment"
+random_seed=42
+
+[paths]
+repo="/research/hutchinson/workspace/holmesa8/projects/audio2text"
+data="/research/hutchinson/workspace/holmesa8/data/audio2text"
+figures="figures/"
+checkpoints="weights/"
+
+[model]
+arch="speechbrain"
+
+[training]
+batch_size=16

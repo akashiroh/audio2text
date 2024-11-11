@@ -1,0 +1,16 @@
+# config.toml
+
+project="audio2text"
+debug=1
+verbose=1
+group="MM_DD_experiment"
+random_seed=42
+
+[paths]
+repo="/path/to/repo"
+data="/path/to/data"
+figures="figures/"
+checkpoints="weights/"
+
+[model]
+arch="speechbrain"

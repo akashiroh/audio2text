@@ -1,0 +1,19 @@
+name: audioenv
+channels:
+  - conda-forge
+  - pytorch
+dependencies:
+  - python=3.10
+  - pip
+  - torchaudio
+  - ffmpeg
+  - tqdm
+  - pandas
+  - matplotlib
+  - wandb
+  - seaborn
+  - pip:
+    - jiwer
+    - transformers
+    - pathlib
+    - speechbrain

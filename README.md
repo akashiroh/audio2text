@@ -29,8 +29,7 @@ This repo works with audio files (.wav) and transcriptions of what was said in t
 
 ## Models
 
-- Uses the [tokenizers](https://huggingface.co/docs/tokenizers/en/installation) package to perform word-level tokenization
 - Loaded pre-trained models from:
 	- Speechbrain
-	- HuggingFace
-	- etc
+- Tokenized targets with built-in tokenizer from speechbrain
+- Evaluate model using jiwer word error rate
