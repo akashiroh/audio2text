@@ -1,7 +1,36 @@
-# audio2text
+# Audio2Text
 
-# Environment
-- conda create -n ENV\_NAME
-- Conda install torchaudio first along with some backend
- - ffmpeg
- - sox
+This repo contains a simple implementation of audio-to-text transcription using pre-trained models
+
+## Setup
+
+**Conda**
+
+- First, download [Conda](https://docs.anaconda.com/free/miniconda/) or check that it is already installed
+- Clone the repo:
+
+```
+git clone git@github.com:akashiroh/audio2text.git
+cd audio2text
+```
+
+```
+conda create -n ENVIRONMENT_NAME
+conda install pytorch::torchaudio # do this first for highest chance of success
+conda install -c conda-forge ffmpeg # needed as a backend for torchaudio to process .wav files
+```
+
+## Dataset
+
+This repo works with audio files (.wav) and transcriptions of what was said in those videos
+
+- [LibriSpeech ASR Corpus](http://www.openslr.org/12) (.flac)
+- [VoxForge](http://www.repository.voxforge1.org/downloads/en/Trunk/Audio/Main/16kHz_16bit/) (.wav)
+
+## Models
+
+- Uses the [tokenizers](https://huggingface.co/docs/tokenizers/en/installation) package to perform word-level tokenization
+- Loaded pre-trained models from:
+	- Speechbrain
+	- HuggingFace
+	- etc
