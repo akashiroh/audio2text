@@ -51,9 +51,3 @@ class AudioDataset(Dataset):
         _output = waveform1
 
         return _input, _output
-
-
-
-# main
-data_path = Path("/research/hutchinson/workspace/holmesa8/data/audio2text")
-AudioDataset(data_path)
