@@ -13,19 +13,16 @@ class AudioDataset(Dataset):
     def __init__(
         self,
         data_path: Path,
+        tokenizer,
         sample_rate: int=16000,
         transform=None,
     ):
-
-        tokenizer = Tokenizer.from_pretrained("bert-base-uncased")
-        tokenizer.pre_tokenizer = pre_tokenizers.Whitespace()
-
         df = pd.read_parquet(data_path / "transcriptions.parquet")
         
         self.tokenized = []
         for transcription in df.transcription:
             self.tokenized.append(
-                tokenizer.encode(transcription)
+                tokenizer.encode(transcription.upper())
             )
 
         self.waveforms = []
